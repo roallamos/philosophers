@@ -6,43 +6,44 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:25:38 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/21 20:19:00 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:35:16 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-typedef struct	indidual_philo_s
-{
-	int	philo;
-	int	total_philo;
-} indidual_philo_t;
-
-
-typedef struct	data_s
-{
-	int	philo;
-	int	total_philo;
-	int	*cambiar;
-	pthread_mutex_t *fork;
-} data_t;
-
 void	*routine(void *arg)
 {
 	int nb;
+	int nb_derecha = 0;
 	data_t *data;
 	int i = 0;
 
 	data = (data_t *)arg;
 	nb = data->philo;
-	while(i < 1000000)
+	nb_derecha = nb + 1;
+	if (nb_derecha > data->total_philo)
+		nb_derecha = 1;
+/*	if (data->philo % 2 == 0)
+		usleep(100);*/
+	while(i < 2 && nb % 2 == 1)
 	{
-		pthread_mutex_lock(&data->fork[nb]);
-		*data->cambiar += 1;
-		pthread_mutex_unlock(&data->fork[nb]);
+		pthread_mutex_lock(&data->fork[nb - 1]);
+		pthread_mutex_lock(&data->fork[nb_derecha - 1]);
+		printf("%d\n", data->philo);
+		pthread_mutex_unlock(&data->fork[nb_derecha - 1]);
+		pthread_mutex_unlock(&data->fork[nb - 1]);
 		i++;
 	}
-	printf("%d\n", nb);
+	while(i < 2 && nb % 2 == 0)
+	{
+		pthread_mutex_lock(&data->fork[nb_derecha - 1]);
+		pthread_mutex_lock(&data->fork[nb - 1]);
+		printf("%d\n", data->philo);
+		pthread_mutex_unlock(&data->fork[nb - 1]);
+		pthread_mutex_unlock(&data->fork[nb_derecha - 1]);
+		i++;
+	}
 	return(NULL);
 }
 
@@ -53,7 +54,6 @@ int	main(int argc, char **argv)
 	int	nb;
 	data_t *data;
 	pthread_mutex_t *mutex;
-	int	pruebas = 0;
 
 	if (argc == 1)
 		return (0);
@@ -72,7 +72,6 @@ int	main(int argc, char **argv)
 	{
 		data[i].philo = i + 1;
 		data[i].total_philo = nb;
-		data[i].cambiar = &pruebas;
 		data[i].fork = mutex;
 		if(pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
 			return (0);
@@ -84,7 +83,6 @@ int	main(int argc, char **argv)
 		pthread_join(th[i], NULL);
 		i++;
 	}
-	printf("pruebas %d", pruebas);
 	while (i < nb)
 	{
 		pthread_mutex_destroy(&mutex[i]);
