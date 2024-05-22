@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/22 17:18:36 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:33:20 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ typedef struct data_s
 } data_t;
 
 int	ft_atoi(const char *str);
+void	*routine(void *arg);
 
 #endif

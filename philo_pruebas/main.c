@@ -6,46 +6,11 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:25:38 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/22 17:35:16 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:30:22 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*routine(void *arg)
-{
-	int nb;
-	int nb_derecha = 0;
-	data_t *data;
-	int i = 0;
-
-	data = (data_t *)arg;
-	nb = data->philo;
-	nb_derecha = nb + 1;
-	if (nb_derecha > data->total_philo)
-		nb_derecha = 1;
-/*	if (data->philo % 2 == 0)
-		usleep(100);*/
-	while(i < 2 && nb % 2 == 1)
-	{
-		pthread_mutex_lock(&data->fork[nb - 1]);
-		pthread_mutex_lock(&data->fork[nb_derecha - 1]);
-		printf("%d\n", data->philo);
-		pthread_mutex_unlock(&data->fork[nb_derecha - 1]);
-		pthread_mutex_unlock(&data->fork[nb - 1]);
-		i++;
-	}
-	while(i < 2 && nb % 2 == 0)
-	{
-		pthread_mutex_lock(&data->fork[nb_derecha - 1]);
-		pthread_mutex_lock(&data->fork[nb - 1]);
-		printf("%d\n", data->philo);
-		pthread_mutex_unlock(&data->fork[nb - 1]);
-		pthread_mutex_unlock(&data->fork[nb_derecha - 1]);
-		i++;
-	}
-	return(NULL);
-}
 
 int	main(int argc, char **argv)
 {
@@ -63,10 +28,7 @@ int	main(int argc, char **argv)
 	data = (data_t *) malloc(sizeof(data_t) * nb);
 	mutex = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * nb);
 	while(i < nb)
-	{
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
+		pthread_mutex_init(&mutex[i++], NULL);
 	i = 0;
 	while (i < nb)
 	{
@@ -79,16 +41,12 @@ int	main(int argc, char **argv)
 	}
 	i = 0;
 	while (i < nb)
-	{
-		pthread_join(th[i], NULL);
-		i++;
-	}
+		pthread_join(th[i++], NULL);
+	i = 0;
 	while (i < nb)
-	{
-		pthread_mutex_destroy(&mutex[i]);
-		i++;
-	}
+		pthread_mutex_destroy(&mutex[i++]);
 	free(th);
 	free(data);
+	free(mutex);
 	return (0);
 }
