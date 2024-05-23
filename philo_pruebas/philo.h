@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/22 19:33:20 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:57:59 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 # include <unistd.h>
 # include <string.h>
 
-typedef struct data_s
+typedef struct s_data
 {
-	int	philo;
-	int	total_philo;
-	pthread_mutex_t *fork;
-} data_t;
+	int				philo;
+	int				total_philo;
+	pthread_mutex_t	*fork;
+}	t_data;
 
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 void	*routine(void *arg);
 
 #endif
