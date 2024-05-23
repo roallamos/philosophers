@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 19:24:24 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/23 14:59:52 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:57:45 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*routine(void *arg)
 	data = (t_data *)arg;
 	nb = data->philo;
 	nb_derecha = nb + 1;
-	if (nb_derecha > data->total_philo)
+	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
 	if (nb % 2 == 1)
 		eat(data, nb - 1, nb_derecha - 1);

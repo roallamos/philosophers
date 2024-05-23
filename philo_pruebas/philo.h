@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/23 14:57:59 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:00:19 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,19 @@
 # include <unistd.h>
 # include <string.h>
 
+typedef struct s_arg
+{
+	int	nb_philos;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	nb_must_eat;
+}	t_arg;
+
 typedef struct s_data
 {
 	int				philo;
-	int				total_philo;
+	t_arg			arg;
 	pthread_mutex_t	*fork;
 }	t_data;
 
