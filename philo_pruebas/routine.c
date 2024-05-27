@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 19:24:24 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/23 16:57:45 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:20:26 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	eat(t_data *data, int fork_1, int fork_2)
 {
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
 	pthread_mutex_lock(&data->fork[fork_1]);
-	printf("%d philo nº %d has taken a fork\n", gettimeofday(), data->philo);
+	gettimeofday(&tv, NULL);
+	printf("%ld %d has taken a fork\n",tv.tv_usec - data->tv.tv_usec, data->philo);
 	pthread_mutex_lock(&data->fork[fork_2]);
-	printf("philo nº %d is eating\n", data->philo);
+	gettimeofday(&tv, NULL);
+	printf("%ld %d is eating\n",tv.tv_usec - data->tv.tv_usec, data->philo);
 	usleep(data->arg.time_to_eat);
 	pthread_mutex_unlock(&data->fork[fork_2]);
 	pthread_mutex_unlock(&data->fork[fork_1]);
@@ -25,7 +30,10 @@ void	eat(t_data *data, int fork_1, int fork_2)
 
 void	philo_sleep(t_data *data)
 {
-	printf("philo nº %d is sleeping\n", data->philo);
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	printf("%ld %d is sleeping\n", tv.tv_usec - data->tv.tv_usec, data->philo);
 	usleep(data->arg.time_to_sleep);
 }
 
@@ -34,10 +42,12 @@ void	*routine(void *arg)
 	int		nb;
 	int		nb_derecha;
 	t_data	*data;
+	struct timeval tv;
 
 	data = (t_data *)arg;
 	nb = data->philo;
 	nb_derecha = nb + 1;
+//	while(1){
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
 	if (nb % 2 == 1)
@@ -45,5 +55,7 @@ void	*routine(void *arg)
 	else
 		eat(data, nb_derecha - 1, nb - 1);
 	philo_sleep(data);
+	gettimeofday(&tv, NULL);
+	printf("%ld %d is thinking\n", tv.tv_usec - data->tv.tv_usec, data->philo);
 	return (NULL);
 }
