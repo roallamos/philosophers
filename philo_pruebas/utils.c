@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 16:42:21 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:40:29 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ long long	gettime_ms(struct timeval data)
 	long long		miliseconds;
 	long long		data_ms;
 
+	data_ms = (data.tv_sec * 1000LL) + (data.tv_usec / 1000);
 	gettimeofday(&tv, NULL);
 	miliseconds = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
-	data_ms = (data.tv_sec * 1000LL) + (data.tv_usec / 1000);
 	return (miliseconds - data_ms);
 }
 

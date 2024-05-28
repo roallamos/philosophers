@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:25:38 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 16:43:44 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:26:20 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,19 @@ void	init_mutex(pthread_mutex_t *mutex, int nb)
 void	init_th(pthread_t *th, t_data *data, pthread_mutex_t *mutex, t_arg arg)
 {
 	int				i;
+	int				*dead;
 	struct timeval	tv;
 
 	i = 0;
+	dead = (int *) malloc(4);
+	*dead = 0;
 	gettimeofday(&tv, NULL);
 	while (i < arg.nb_philos)
 	{
 		data[i].philo = i + 1;
 		data[i].arg = arg;
 		data[i].fork = mutex;
+		data[i].dead = dead;
 		data[i].tv = tv;
 		if (pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
 			exit (0);
@@ -58,6 +62,7 @@ void	ft_free(pthread_t *th, t_data *data, pthread_mutex_t *mutex, int nb)
 	i = 0;
 	while (i < nb)
 		pthread_mutex_destroy(&mutex[i++]);
+	free(data->dead);
 	free(th);
 	free(data);
 	free(mutex);

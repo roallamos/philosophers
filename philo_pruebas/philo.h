@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 16:43:24 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:02:33 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef struct s_arg
 typedef struct s_data
 {
 	int				philo;
+	long long		last_ate;
+	int				*dead;
+	int				*terminate;
 	t_arg			arg;
 	pthread_mutex_t	*fork;
 	struct timeval	tv;
