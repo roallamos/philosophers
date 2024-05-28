@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/27 17:41:58 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:43:24 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ typedef struct s_data
 	int				philo;
 	t_arg			arg;
 	pthread_mutex_t	*fork;
-	struct timeval tv;
+	struct timeval	tv;
 }	t_data;
 
-int		ft_atoi(const char *str);
-void	*routine(void *arg);
+int			ft_atoi(const char *str);
+void		*routine(void *arg);
+long long	gettime_ms(struct timeval data);
+void		ft_usleep(long long wait, long long time, struct timeval tv);
 
 #endif

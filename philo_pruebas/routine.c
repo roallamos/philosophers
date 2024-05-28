@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 19:24:24 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/27 18:20:26 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:44:15 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,20 @@
 
 void	eat(t_data *data, int fork_1, int fork_2)
 {
-	struct timeval tv;
-
-	gettimeofday(&tv, NULL);
 	pthread_mutex_lock(&data->fork[fork_1]);
-	gettimeofday(&tv, NULL);
-	printf("%ld %d has taken a fork\n",tv.tv_usec - data->tv.tv_usec, data->philo);
+	printf("%lld %d has taken a fork\n", gettime_ms(data->tv), data->philo);
 	pthread_mutex_lock(&data->fork[fork_2]);
-	gettimeofday(&tv, NULL);
-	printf("%ld %d is eating\n",tv.tv_usec - data->tv.tv_usec, data->philo);
-	usleep(data->arg.time_to_eat);
+	printf("%lld %d has taken a fork\n", gettime_ms(data->tv), data->philo);
+	printf("%lld %d is eating\n", gettime_ms(data->tv), data->philo);
+	ft_usleep(data->arg.time_to_eat, gettime_ms(data->tv), data->tv);
 	pthread_mutex_unlock(&data->fork[fork_2]);
 	pthread_mutex_unlock(&data->fork[fork_1]);
 }
 
 void	philo_sleep(t_data *data)
 {
-	struct timeval tv;
-
-	gettimeofday(&tv, NULL);
-	printf("%ld %d is sleeping\n", tv.tv_usec - data->tv.tv_usec, data->philo);
-	usleep(data->arg.time_to_sleep);
+	printf("%lld %d is sleeping\n", gettime_ms(data->tv), data->philo);
+	ft_usleep(data->arg.time_to_sleep, gettime_ms(data->tv), data->tv);
 }
 
 void	*routine(void *arg)
@@ -42,12 +35,10 @@ void	*routine(void *arg)
 	int		nb;
 	int		nb_derecha;
 	t_data	*data;
-	struct timeval tv;
 
 	data = (t_data *)arg;
 	nb = data->philo;
 	nb_derecha = nb + 1;
-//	while(1){
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
 	if (nb % 2 == 1)
@@ -55,7 +46,6 @@ void	*routine(void *arg)
 	else
 		eat(data, nb_derecha - 1, nb - 1);
 	philo_sleep(data);
-	gettimeofday(&tv, NULL);
-	printf("%ld %d is thinking\n", tv.tv_usec - data->tv.tv_usec, data->philo);
+	printf("%lld %d is thinking\n", gettime_ms(data->tv), data->philo);
 	return (NULL);
 }

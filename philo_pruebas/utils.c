@@ -6,11 +6,32 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/21 19:25:17 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:42:21 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_usleep(long long wait, long long time, struct timeval tv)
+{
+	long long	real_time;
+
+	real_time = 0;
+	while (real_time < time + wait)
+		real_time = gettime_ms(tv);
+}
+
+long long	gettime_ms(struct timeval data)
+{
+	struct timeval	tv;
+	long long		miliseconds;
+	long long		data_ms;
+
+	gettimeofday(&tv, NULL);
+	miliseconds = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
+	data_ms = (data.tv_sec * 1000LL) + (data.tv_usec / 1000);
+	return (miliseconds - data_ms);
+}
 
 int	ft_atoi(const char *str)
 {
