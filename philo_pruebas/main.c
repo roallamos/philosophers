@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 21:21:43 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:37:40 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	init_th(pthread_t *th, t_data *data, pthread_mutex_t *mutex, t_arg arg)
 		data[i].last_ate = 0;
 		data[i].print_mutex = &mutex[arg.nb_philos];
 		data[i].dead_mutex = &mutex[arg.nb_philos + 1];
-		data[i].th = th;
 		if (pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
 			exit (0);
 		i++;

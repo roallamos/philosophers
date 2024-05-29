@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 21:23:28 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:41:53 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int	check_dead(t_data *data)
 		{
 			pthread_mutex_unlock(data->dead_mutex);
 			speak(data, DIE);
-			pthread_mutex_lock(data->dead_mutex);
-			*data->dead = 1;
-			pthread_mutex_unlock(data->dead_mutex);
 		}
 		else
 			pthread_mutex_unlock(data->dead_mutex);
