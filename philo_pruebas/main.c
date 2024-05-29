@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 12:25:38 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 21:26:20 by rodralva         ###   ########.fr       */
+/*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
+/*   Updated: 2024/05/29 13:00:23 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,15 @@ void	init_th(pthread_t *th, t_data *data, pthread_mutex_t *mutex, t_arg arg)
 		data[i].fork = mutex;
 		data[i].dead = dead;
 		data[i].tv = tv;
+		data[i].last_ate = 0;
 		if (pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
 			exit (0);
 		i++;
+		if (i == arg.nb_philos)
+		{
+			if (pthread_create(&th[i], NULL, &checker_routine, data))
+					exit (0);
+		}
 	}
 }
 
@@ -79,13 +85,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		return (0);
 	init_args(argv, &arg);
-	th = (pthread_t *) malloc(sizeof(pthread_t) * arg.nb_philos);
+	th = (pthread_t *) malloc(sizeof(pthread_t) * arg.nb_philos + 1);
 	data = (t_data *) malloc(sizeof(t_data) * arg.nb_philos);
 	mutex = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * arg.nb_philos);
 	init_mutex(mutex, arg.nb_philos);
 	init_th(th, data, mutex, arg);
 	i = 0;
-	while (i < arg.nb_philos)
+	while (i <= arg.nb_philos)
 		pthread_join(th[i++], NULL);
 	ft_free(th, data, mutex, arg.nb_philos);
 	return (0);

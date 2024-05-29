@@ -6,11 +6,26 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 18:40:29 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:54:24 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*ft_memset(void *buf, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*t;
+
+	i = 0;
+	t = (unsigned char *) buf;
+	while (i < len)
+	{
+		t[i] = c;
+		i++;
+	}
+	return (t);
+}
 
 void	ft_usleep(long long wait, long long time, struct timeval tv)
 {

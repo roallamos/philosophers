@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/28 20:02:33 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:58:08 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,8 @@ int			ft_atoi(const char *str);
 void		*routine(void *arg);
 long long	gettime_ms(struct timeval data);
 void		ft_usleep(long long wait, long long time, struct timeval tv);
+void		*checker_routine(void *arg);
+int			check_dead(t_data *data);
+void	*ft_memset(void *buf, int c, size_t len);
 
 #endif
