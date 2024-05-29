@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 18:04:43 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:34:30 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_data
 	int				philo;
 	int				*dead;
 	long long		last_ate;
+	int				nb_eat;
 	t_arg			arg;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*print_mutex;

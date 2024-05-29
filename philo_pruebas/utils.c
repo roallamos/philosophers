@@ -6,26 +6,11 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 12:54:24 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:49:59 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*ft_memset(void *buf, int c, size_t len)
-{
-	size_t			i;
-	unsigned char	*t;
-
-	i = 0;
-	t = (unsigned char *) buf;
-	while (i < len)
-	{
-		t[i] = c;
-		i++;
-	}
-	return (t);
-}
 
 void	ft_usleep(long long wait, long long time, struct timeval tv)
 {
@@ -42,9 +27,9 @@ long long	gettime_ms(struct timeval data)
 	long long		miliseconds;
 	long long		data_ms;
 
-	data_ms = (data.tv_sec * 1000LL) + (data.tv_usec / 1000);
+	data_ms = (data.tv_sec * 1000) + (data.tv_usec / 1000);
 	gettimeofday(&tv, NULL);
-	miliseconds = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
+	miliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (miliseconds - data_ms);
 }
 

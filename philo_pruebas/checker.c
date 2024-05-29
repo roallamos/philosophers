@@ -6,11 +6,16 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 17:40:30 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:23:28 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*int	check_eat(t_data *data)
+{
+	
+}*/
 
 int	check_dead(t_data *data)
 {
@@ -45,7 +50,9 @@ void	*checker_routine(void *arg)
 		while (i < data->arg.nb_philos)
 		{
 			if (check_dead(&data[i]))
-					return (NULL);
+				return (NULL);
+		/*	if (check_eat(&data[i]))
+					return (NULL);*/
 			i++;
 		}
 	}
