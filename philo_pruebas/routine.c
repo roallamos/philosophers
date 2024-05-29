@@ -16,6 +16,8 @@ int	eat(t_data *data, int fork_1, int fork_2)
 {
 	pthread_mutex_lock(&data->fork[fork_1]);
 	speak(data, FORK);
+	if (data->arg.nb_philos == 1)
+		return (1);
 	pthread_mutex_lock(&data->fork[fork_2]);
 	speak(data, FORK);
 	speak(data, EAT);
@@ -46,7 +48,10 @@ void	*routine(void *arg)
 	while (1)
 	{
 		if (nb % 2 == 1)
-			eat(data, nb - 1, nb_derecha - 1);
+		{
+			if (eat(data, nb - 1, nb_derecha - 1) == 1)
+				return (NULL);
+		}
 		else
 			eat(data, nb_derecha - 1, nb - 1);
 		philo_sleep(data);
