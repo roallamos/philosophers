@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:46:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 17:02:55 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:08:58 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,12 @@ void	*routine(void *arg)
 	nb_derecha = nb + 1;
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
+	if (nb % 2 == 1)
+		usleep(1000);
 	while (1)
 	{
-		if (nb % 2 == 1)
-		{
-			if (eat(data, nb - 1, nb_derecha - 1) == 1)
-				return (NULL);
-		}
-		else
-			eat(data, nb_derecha - 1, nb - 1);
+		if (eat(data, nb - 1, nb_derecha - 1) == 1)
+			return (NULL);
 		philo_sleep(data);
 		speak(data, THINK);
 		pthread_mutex_lock(data->dead_mutex);
