@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:46:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 18:08:58 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:33:31 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	*routine(void *arg)
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
 	if (nb % 2 == 1)
-		usleep(1000);
+		usleep(50000);
 	while (1)
 	{
 		if (eat(data, nb - 1, nb_derecha - 1) == 1)

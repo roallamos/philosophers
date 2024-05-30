@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 16:00:44 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:33:45 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,24 @@ void	init_args(char **argv, t_arg *arg, int argc)
 		arg->nb_must_eat = -1;
 }
 
-void	init_mutex(pthread_mutex_t *mutex, int nb)
+int	init_mutex(pthread_mutex_t *mutex, int nb)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb)
 	{
-		pthread_mutex_init(&mutex[i], NULL);
+		if (pthread_mutex_init(&mutex[i], NULL))
+		{
+				printf("mutex init error\n");
+				return (1);
+		}
 		i++;
 	}
+	return (0);
 }
 
-void	init_th(pthread_t *th, t_data *data)
+int	init_th(pthread_t *th, t_data *data)
 {
 	int			i;
 	long long	time;
@@ -46,26 +51,44 @@ void	init_th(pthread_t *th, t_data *data)
 	while (i < data->arg.nb_philos)
 	{
 		data[i].start_time = time;
-		if (pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
-			exit (0);
+		if (pthread_create(&th[i], NULL, &routine, &data[i]))
+		{
+			printf("thread chreation error\n");
+			return (1);
+		}
 		i++;
 		if (i == data->arg.nb_philos)
 		{
 			if (pthread_create(&th[i], NULL, &checker_routine, data))
-					exit (0);
+			{
+				printf("thread chreation error\n");
+				return (1);
+			}
 		}
 	}
 	i = 0;
 	while (i <= data->arg.nb_philos)
-		pthread_join(th[i++], NULL);
+	{
+		if (pthread_join(th[i++], NULL))
+		{
+			printf("thread chreation error\n");
+			return (1);
+		}
+	}
+	return (0);
 }
 
-void	init_data(t_data *data, t_mutex mutex, t_arg arg)
+int	init_data(t_data *data, t_mutex mutex, t_arg arg)
 {
 	int				*dead;	
 	int				i;
 	
 	dead = (int *) malloc(4);
+	if (!dead)
+	{
+			printf("memory allocation error\n");
+			return (1);
+	}
 	*dead = 0;
 	i = 0;
 	while (i < arg.nb_philos)
@@ -79,6 +102,7 @@ void	init_data(t_data *data, t_mutex mutex, t_arg arg)
 		data[i].dead_mutex = &mutex.mutex_extra[1];
 		i++;
 	}
+	return (0);
 }
 
 void	ft_free(pthread_t *th, t_data *data, t_mutex mutex, int nb)
@@ -108,9 +132,29 @@ int	main(int argc, char **argv)
 		return (0);
 	init_args(argv, &arg, argc);
 	th = (pthread_t *) malloc(sizeof(pthread_t) * arg.nb_philos + 1);
+	if (!th)
+	{
+			printf("memory allocation error\n");
+			return (1);
+	}
 	data = (t_data *) malloc(sizeof(t_data) * arg.nb_philos);
+	if (!data)
+	{
+			printf("memory allocation error\n");
+			return (1);
+	}
 	mutex.mutex_fork = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * (arg.nb_philos));
+	if (!mutex.mutex_fork)
+	{
+			printf("memory allocation error\n");
+			return (1);
+	}
 	mutex.mutex_extra = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * 2);
+	if (!mutex.mutex_extra)
+	{
+			printf("memory allocation error\n");
+			return (1);
+	}
 	init_mutex(mutex.mutex_fork, arg.nb_philos);
 	init_mutex(mutex.mutex_extra, 2);
 	init_data(data, mutex, arg);
