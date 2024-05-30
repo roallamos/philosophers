@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 15:57:49 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:00:26 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_usleep(long long wait)
 
 		start_time = gettime_ms();
 		while(gettime_ms() < start_time + wait)
-			usleep(1000);
+			usleep(100);
 }
 
 long long	gettime_ms(void)
