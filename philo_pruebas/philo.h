@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 21:34:30 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:39:46 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # define SLEEP 3
 # define THINK 4
 # define DIE 5
+
+typedef struct s_mutex
+{
+		pthread_mutex_t *mutex_fork;
+		pthread_mutex_t *mutex_extra;
+}	t_mutex;
 
 typedef struct s_arg
 {
