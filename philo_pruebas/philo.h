@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 12:39:46 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:05:13 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 	int				philo;
 	int				*dead;
 	long long		last_ate;
+	long long		start_time;
 	int				nb_eat;
 	t_arg			arg;
 	pthread_mutex_t	*fork;
@@ -56,8 +57,8 @@ typedef struct s_data
 
 int			ft_atoi(const char *str);
 void		*routine(void *arg);
-long long	gettime_ms(struct timeval data);
-void		ft_usleep(long long wait, long long time, struct timeval tv);
+long long	gettime_ms(void);
+void		ft_usleep(long long wait);
 void		*checker_routine(void *arg);
 int			check_dead(t_data *data);
 void		*ft_memset(void *buf, int c, size_t len);

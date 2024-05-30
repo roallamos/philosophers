@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/29 21:41:53 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:04:06 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	check_dead(t_data *data)
 {
 	pthread_mutex_lock(data->dead_mutex);
-	if (gettime_ms(data->tv) - data->last_ate > data->arg.time_to_die || *data->dead == 1)
+	if (gettime_ms() - data->start_time - data->last_ate > data->arg.time_to_die || *data->dead == 1)
 	{
 		if (*data->dead != 1)
 		{

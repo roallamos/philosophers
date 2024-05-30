@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 12:46:04 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:00:44 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	init_mutex(pthread_mutex_t *mutex, int nb)
 
 void	init_th(pthread_t *th, t_data *data)
 {
-	int				i;
-	struct timeval	tv;
+	int			i;
+	long long	time;
 
 	i = 0;
-	gettimeofday(&tv, NULL);
+	time = gettime_ms();
 	while (i < data->arg.nb_philos)
 	{
-		data[i].tv = tv;
+		data[i].start_time = time;
 		if (pthread_create(&th[i], NULL, &routine, &data[i]) != 0)
 			exit (0);
 		i++;

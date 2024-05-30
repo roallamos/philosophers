@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:46:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 12:47:21 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:04:24 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	eat(t_data *data, int fork_1, int fork_2)
 	pthread_mutex_lock(&data->fork[fork_2]);
 	speak(data, FORK);
 	speak(data, EAT);
-	ft_usleep(data->arg.time_to_eat, gettime_ms(data->tv), data->tv);
+	ft_usleep(data->arg.time_to_eat);
 	pthread_mutex_unlock(&data->fork[fork_2]);
 	pthread_mutex_unlock(&data->fork[fork_1]);
 	return (0);
@@ -30,7 +30,7 @@ int	eat(t_data *data, int fork_1, int fork_2)
 int	philo_sleep(t_data *data)
 {
 	speak(data, SLEEP);
-	ft_usleep(data->arg.time_to_sleep, gettime_ms(data->tv), data->tv);
+	ft_usleep(data->arg.time_to_sleep);
 	return (0);
 }
 
