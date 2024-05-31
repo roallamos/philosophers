@@ -14,16 +14,18 @@
 
 int	eat(t_data *data, int fork_1, int fork_2)
 {
-/*	ft_usleep(100);*/
+	pthread_mutex_lock(data->lock_mutex);
 	pthread_mutex_lock(&data->fork[fork_1]);
 	speak(data, FORK);
 	if (data->arg.nb_philos == 1)
 	{
 		pthread_mutex_unlock(&data->fork[fork_1]);
+		pthread_mutex_unlock(data->lock_mutex);
 		ft_usleep(data->arg.time_to_die);
 		return (1);
 	}
 	pthread_mutex_lock(&data->fork[fork_2]);
+	pthread_mutex_unlock(data->lock_mutex);
 	speak(data, FORK);
 	speak(data, EAT);
 	ft_usleep(data->arg.time_to_eat);
@@ -50,8 +52,8 @@ void	*routine(void *arg)
 	nb_derecha = nb + 1;
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
-	if (nb % 2 == 0)
-		usleep(50000);
+/*	if (nb % 2 == 0)
+		usleep(50000);*/
 	while (1)
 	{
 		if (nb != data->arg.nb_philos)

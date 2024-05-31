@@ -52,6 +52,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*dead_mutex;
+	pthread_mutex_t	*lock_mutex;
 	struct timeval	tv;
 }	t_data;
 

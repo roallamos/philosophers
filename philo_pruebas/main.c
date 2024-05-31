@@ -100,6 +100,7 @@ int	init_data(t_data *data, t_mutex mutex, t_arg arg)
 		data[i].last_ate = 0;
 		data[i].print_mutex = &mutex.mutex_extra[0];
 		data[i].dead_mutex = &mutex.mutex_extra[1];
+		data[i].lock_mutex = &mutex.mutex_extra[2];
 		i++;
 	}
 	return (0);
@@ -114,6 +115,7 @@ void	ft_free(pthread_t *th, t_data *data, t_mutex mutex, int nb)
 		pthread_mutex_destroy(&mutex.mutex_fork[i++]);
 	pthread_mutex_destroy(&mutex.mutex_extra[0]);
 	pthread_mutex_destroy(&mutex.mutex_extra[1]);
+	pthread_mutex_destroy(&mutex.mutex_extra[2]);
 	free(data->dead);
 	free(th);
 	free(data);
@@ -149,14 +151,14 @@ int	main(int argc, char **argv)
 			printf("memory allocation error\n");
 			return (1);
 	}
-	mutex.mutex_extra = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * 2);
+	mutex.mutex_extra = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * 3);
 	if (!mutex.mutex_extra)
 	{
 			printf("memory allocation error\n");
 			return (1);
 	}
 	init_mutex(mutex.mutex_fork, arg.nb_philos);
-	init_mutex(mutex.mutex_extra, 2);
+	init_mutex(mutex.mutex_extra, 3);
 	init_data(data, mutex, arg);
 	init_th(th, data);
 	ft_free(th, data, mutex, arg.nb_philos);

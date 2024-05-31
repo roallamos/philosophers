@@ -52,6 +52,8 @@ void	*checker_routine(void *arg)
 					return (NULL);*/
 			i++;
 		}
+		ft_usleep(1000);
 	}
-	usleep(1000);
+	//ft_usleep(1000);
+	return (NULL);
 }
