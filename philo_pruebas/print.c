@@ -24,6 +24,9 @@ void	speak(t_data *data, int action)
 		{
 			data->last_ate = gettime_ms() - data->start_time;
 			printf("%lld %d is eating\n", data->last_ate, data->philo);
+			pthread_mutex_lock(data->nb_eat_mutex);
+			data->nb_eat[data->philo - 1] += 1;
+			pthread_mutex_unlock(data->nb_eat_mutex);
 		}
 		else if (action == SLEEP)
 			printf("%lld %d is sleeping\n", gettime_ms() - data->start_time, data->philo);

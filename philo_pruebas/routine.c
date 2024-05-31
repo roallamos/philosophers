@@ -52,8 +52,6 @@ void	*routine(void *arg)
 	nb_derecha = nb + 1;
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
-/*	if (nb % 2 == 0)
-		usleep(50000);*/
 	while (1)
 	{
 		if (nb != data->arg.nb_philos)

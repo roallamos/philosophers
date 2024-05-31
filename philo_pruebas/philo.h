@@ -47,11 +47,12 @@ typedef struct s_data
 	int				*dead;
 	long long		last_ate;
 	long long		start_time;
-	int				nb_eat;
+	int				*nb_eat;
 	t_arg			arg;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*dead_mutex;
+	pthread_mutex_t	*nb_eat_mutex;
 	pthread_mutex_t	*lock_mutex;
 	struct timeval	tv;
 }	t_data;
