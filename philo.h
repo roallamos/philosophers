@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 16:05:13 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:06:12 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 typedef struct s_mutex
 {
-		pthread_mutex_t *mutex_fork;
-		pthread_mutex_t *mutex_extra;
+	pthread_mutex_t	*mutex_fork;
+	pthread_mutex_t	*mutex_extra;
 }	t_mutex;
 
 typedef struct s_arg
@@ -65,5 +65,6 @@ void		*checker_routine(void *arg);
 int			check_dead(t_data *data);
 void		*ft_memset(void *buf, int c, size_t len);
 void		speak(t_data *data, int action);
+int			check_args(char **argv);
 
 #endif

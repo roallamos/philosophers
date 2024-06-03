@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 19:33:45 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:07:03 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	init_mutex(pthread_mutex_t *mutex, int nb)
 	{
 		if (pthread_mutex_init(&mutex[i], NULL))
 		{
-				printf("mutex init error\n");
-				return (1);
+			printf("mutex init error\n");
+			return (1);
 		}
 		i++;
 	}
@@ -80,10 +80,10 @@ int	init_th(pthread_t *th, t_data *data)
 
 int	init_data(t_data *data, t_mutex mutex, t_arg arg)
 {
-	int				*dead;	
-	int				*eat;
-	int				i;
-	
+	int	*dead;	
+	int	*eat;
+	int	i;
+
 	dead = (int *) malloc(4);
 	if (!dead)
 	{
@@ -128,6 +128,7 @@ void	ft_free(pthread_t *th, t_data *data, t_mutex mutex, int nb)
 	pthread_mutex_destroy(&mutex.mutex_extra[2]);
 	pthread_mutex_destroy(&mutex.mutex_extra[3]);
 	free(data->dead);
+	free(data->nb_eat);
 	free(th);
 	free(data);
 	free(mutex.mutex_fork);
@@ -141,10 +142,10 @@ int	main(int argc, char **argv)
 	t_data			*data;
 	t_mutex			mutex;
 
-	if (argc < 2 || argc > 6)
+	if (argc < 2 || argc > 6 || !check_args(argv))
 		return (0);
 	init_args(argv, &arg, argc);
-	th = (pthread_t *) malloc(sizeof(pthread_t) * arg.nb_philos + 1);
+	th = (pthread_t *) malloc(sizeof(pthread_t) * (arg.nb_philos + 1));
 	if (!th)
 	{
 			printf("memory allocation error\n");

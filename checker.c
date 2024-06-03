@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/03 15:47:03 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:15:55 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_eat(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (data->arg.nb_must_eat == -1)
@@ -39,7 +39,8 @@ int	check_eat(t_data *data)
 int	check_dead(t_data *data)
 {
 	pthread_mutex_lock(data->dead_mutex);
-	if (gettime_ms() - data->start_time - data->last_ate > data->arg.time_to_die || *data->dead == 1)
+	if (gettime_ms() - data->start_time - data->last_ate > data->arg.time_to_die
+		|| *data->dead == 1)
 	{
 		if (*data->dead != 1)
 		{
@@ -56,7 +57,7 @@ int	check_dead(t_data *data)
 
 void	*checker_routine(void *arg)
 {
-	int i;
+	int		i;
 	t_data	*data;
 
 	data = arg;
@@ -68,10 +69,9 @@ void	*checker_routine(void *arg)
 			if (check_dead(&data[i]))
 				return (NULL);
 			if (check_eat(&data[i]))
-					return (NULL);
+				return (NULL);
 			i++;
 		}
-	//	ft_usleep(10);
 	}
 	return (NULL);
 }
