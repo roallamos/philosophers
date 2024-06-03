@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:46:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 21:53:44 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:48:56 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int	eat(t_data *data, int fork_1, int fork_2)
 {
-	pthread_mutex_lock(data->lock_mutex);
+	if (data->arg.nb_philos <= 3)
+		pthread_mutex_lock(data->lock_mutex);
 	pthread_mutex_lock(&data->fork[fork_1]);
 	speak(data, FORK);
 	if (data->arg.nb_philos == 1)
 	{
 		pthread_mutex_unlock(&data->fork[fork_1]);
-		pthread_mutex_unlock(data->lock_mutex);
+		if (data->arg.nb_philos <= 3)
+			pthread_mutex_unlock(data->lock_mutex);
 		ft_usleep(data->arg.time_to_die);
 		return (1);
 	}
@@ -52,6 +54,8 @@ void	*routine(void *arg)
 	nb_derecha = nb + 1;
 	if (nb_derecha > data->arg.nb_philos)
 		nb_derecha = 1;
+	if (data->philo % 2 == 1 && data->arg.nb_philos != 1)
+		ft_usleep(10);
 	while (1)
 	{
 		if (nb != data->arg.nb_philos)

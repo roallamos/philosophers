@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/05/30 17:05:35 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:47:03 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	*checker_routine(void *arg)
 					return (NULL);
 			i++;
 		}
-		ft_usleep(1000);
+	//	ft_usleep(10);
 	}
 	return (NULL);
 }
