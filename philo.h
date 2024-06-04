@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/03 18:06:12 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:29:02 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,9 @@ int			check_dead(t_data *data);
 void		*ft_memset(void *buf, int c, size_t len);
 void		speak(t_data *data, int action);
 int			check_args(char **argv);
+void		init_args(char **argv, t_arg *arg, int argc);
+int			init_mutex(pthread_mutex_t *mutex, int nb);
+int			init_th(pthread_t *th, t_data *data);
+int			init_data(t_data *data, t_mutex mutex, t_arg arg);
 
 #endif
