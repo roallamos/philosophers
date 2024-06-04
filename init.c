@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:24:00 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/04 14:24:46 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:48:06 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,33 @@ int	init_th(pthread_t *th, t_data *data)
 	{
 		data[i].start_time = time;
 		if (pthread_create(&th[i], NULL, &routine, &data[i]))
-		{
-			printf("thread chreation error\n");
-			return (1);
-		}
+			return (printf("thread chreation error\n"), 1);
 		i++;
 		if (i == data->arg.nb_philos)
 		{
 			if (pthread_create(&th[i], NULL, &checker_routine, data))
-			{
-				printf("thread chreation error\n");
-				return (1);
-			}
+				return (printf("thread chreation error\n"), 1);
 		}
 	}
 	i = 0;
 	while (i <= data->arg.nb_philos)
 	{
 		if (pthread_join(th[i++], NULL))
-		{
-			printf("thread chreation error\n");
-			return (1);
-		}
+			return (printf("thread chreation error\n"), 1);
 	}
+	return (0);
+}
+
+int	ini_allocate(int **dead, int **eat, t_arg arg)
+{
+	*dead = (int *) malloc(4);
+	if (!*dead)
+		return (printf("memory allocation error\n"), 1);
+	**dead = 0;
+	*eat = (int *) malloc(4 * arg.nb_philos);
+	if (!*eat)
+		return (printf("memory allocation error\n"), 1);
+	memset(*eat, 0, 4 * arg.nb_philos);
 	return (0);
 }
 
@@ -84,20 +88,8 @@ int	init_data(t_data *data, t_mutex mutex, t_arg arg)
 	int	*eat;
 	int	i;
 
-	dead = (int *) malloc(4);
-	if (!dead)
-	{
-		printf("memory allocation error\n");
+	if (ini_allocate(&dead, &eat, arg))
 		return (1);
-	}
-	*dead = 0;
-	eat = (int *) malloc(4 * arg.nb_philos);
-	if (!eat)
-	{
-		printf("memory allocation error\n");
-		return (1);
-	}
-	memset(eat, 0, 4 * arg.nb_philos);
 	i = 0;
 	while (i < arg.nb_philos)
 	{
