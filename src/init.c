@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:24:00 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/04 16:48:06 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:12:15 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	init_data(t_data *data, t_mutex mutex, t_arg arg)
 		data[i].dead_mutex = &mutex.mutex_extra[1];
 		data[i].lock_mutex = &mutex.mutex_extra[2];
 		data[i].nb_eat_mutex = &mutex.mutex_extra[3];
+		data[i].last_ate_mutex = &mutex.mutex_extra[4];
 		i++;
 	}
 	return (0);

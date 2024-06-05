@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/04 16:06:52 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:11:27 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	allocate(pthread_t **th, t_data **data, t_mutex *mutex, t_arg	arg)
 	if (!mutex->mutex_fork)
 		return (printf("memory allocation error\n"), 1);
 	mutex->mutex_extra = (pthread_mutex_t *)
-		malloc(sizeof(pthread_mutex_t) * 4);
+		malloc(sizeof(pthread_mutex_t) * 5);
 	if (!mutex->mutex_extra)
 		return (printf("memory allocation error\n"), 1);
 	return (0);
@@ -39,7 +39,7 @@ void	ft_free(pthread_t *th, t_data *data, t_mutex mutex, int nb)
 	while (i < nb && mutex.mutex_fork)
 		pthread_mutex_destroy(&mutex.mutex_fork[i++]);
 	i = 0;
-	while (i < 4 && mutex.mutex_extra)
+	while (i < 5 && mutex.mutex_extra)
 		pthread_mutex_destroy(&mutex.mutex_extra[i++]);
 	if (data)
 	{
@@ -74,7 +74,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	init_mutex(mutex.mutex_fork, arg.nb_philos);
-	init_mutex(mutex.mutex_extra, 4);
+	init_mutex(mutex.mutex_extra, 5);
 	init_data(data, mutex, arg);
 	init_th(th, data);
 	ft_free(th, data, mutex, arg.nb_philos);

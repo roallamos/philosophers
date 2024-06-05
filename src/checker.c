@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:25:08 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 15:31:56 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:13:53 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int	check_eat(t_data *data)
 int	check_dead(t_data *data)
 {
 	pthread_mutex_lock(data->dead_mutex);
+	pthread_mutex_lock(data->last_ate_mutex);
 	if (gettime_ms() - data->start_time - data->last_ate > data->arg.time_to_die
 		|| *data->dead == 1)
 	{
+		pthread_mutex_unlock(data->last_ate_mutex);
 		if (*data->dead != 1)
 		{
 			*data->dead = 1;
@@ -52,6 +54,7 @@ int	check_dead(t_data *data)
 			pthread_mutex_unlock(data->dead_mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(data->last_ate_mutex);
 	pthread_mutex_unlock(data->dead_mutex);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 15:36:54 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:12:38 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_data
 	pthread_mutex_t	*dead_mutex;
 	pthread_mutex_t	*nb_eat_mutex;
 	pthread_mutex_t	*lock_mutex;
+	pthread_mutex_t	*last_ate_mutex;
 	struct timeval	tv;
 }	t_data;
 

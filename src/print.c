@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:48:17 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 15:37:22 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:30:10 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	printf_eat(t_data *data)
 {
+	pthread_mutex_lock(data->last_ate_mutex);
 	data->last_ate = gettime_ms() - data->start_time;
+	pthread_mutex_unlock(data->last_ate_mutex);
 	printf("%lld %d is eating\n", data->last_ate, data->philo);
 	pthread_mutex_lock(data->nb_eat_mutex);
 	data->nb_eat[data->philo - 1] += 1;
@@ -27,10 +29,10 @@ void	speak_dead(t_data *data)
 	printf("%lld %d died\n", gettime_ms() - data->start_time, data->philo);
 	pthread_mutex_unlock(data->print_mutex);
 }
+
 void	speak(t_data *data, int action)
 {
 	pthread_mutex_lock(data->print_mutex);
-//	pthread_mutex_lock(data->dead_mutex);
 	if (!checker_dead(data))
 	{
 		if (action == FORK)
@@ -44,13 +46,6 @@ void	speak(t_data *data, int action)
 		else if (action == THINK)
 			printf("%lld %d is thinking\n",
 				gettime_ms() - data->start_time, data->philo);
-		/*else if (action == DIE)
-		{
-			printf("%lld %d died\n",
-				gettime_ms() - data->start_time, data->philo);
-			*data->dead = 1;
-		}*/
 	}
-//	pthread_mutex_unlock(data->dead_mutex);
 	pthread_mutex_unlock(data->print_mutex);
 }
