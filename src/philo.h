@@ -6,7 +6,7 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:25:26 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/04 14:29:02 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:36:54 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ long long	gettime_ms(void);
 void		ft_usleep(long long wait);
 void		*checker_routine(void *arg);
 int			check_dead(t_data *data);
+int			checker_dead(t_data *data);
 void		*ft_memset(void *buf, int c, size_t len);
 void		speak(t_data *data, int action);
+void		speak_dead(t_data *data);
 int			check_args(char **argv);
 void		init_args(char **argv, t_arg *arg, int argc);
 int			init_mutex(pthread_mutex_t *mutex, int nb);

@@ -6,11 +6,23 @@
 /*   By: rodralva <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:24:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/03 16:18:12 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:38:05 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	checker_dead(t_data *data)
+{
+	pthread_mutex_lock(data->dead_mutex);
+	if (*data->dead == 1)
+	{
+		pthread_mutex_unlock(data->dead_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(data->dead_mutex);
+	return (0);
+}
 
 void	ft_usleep(long long wait)
 {
