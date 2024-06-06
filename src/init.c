@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:24:00 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 17:12:15 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:23:40 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ int	init_th(pthread_t *th, t_data *data)
 	}
 	i = 0;
 	while (i <= data->arg.nb_philos)
-	{
-		if (pthread_join(th[i++], NULL))
-			return (printf("thread chreation error\n"), 1);
-	}
+		pthread_join(th[i++], NULL);
 	return (0);
 }
 

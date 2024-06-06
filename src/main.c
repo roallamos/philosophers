@@ -6,7 +6,7 @@
 /*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:45:22 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 17:11:27 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:26:21 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void	ft_free(pthread_t *th, t_data *data, t_mutex mutex, int nb)
 		free(mutex.mutex_extra);
 }
 
+int	terminate(pthread_t *th, t_data *data, t_mutex mutex, int nb)
+{
+	ft_free(th, data, mutex, nb);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	pthread_t		*th;
@@ -63,19 +69,19 @@ int	main(int argc, char **argv)
 	t_data			*data;
 	t_mutex			mutex;
 
-	if (argc < 2 || argc > 6 || !check_args(argv))
+	if ((argc != 5 && argc != 6) || !check_args(argv))
 		return (0);
 	init_args(argv, &arg, argc);
 	memset(&mutex, 0, sizeof(t_mutex));
 	memset(&data, 0, sizeof(t_data *));
 	if (allocate(&th, &data, &mutex, arg))
-	{
-		ft_free(th, data, mutex, arg.nb_philos);
-		return (0);
-	}
-	init_mutex(mutex.mutex_fork, arg.nb_philos);
-	init_mutex(mutex.mutex_extra, 5);
-	init_data(data, mutex, arg);
+		return (terminate(th, data, mutex, arg.nb_philos));
+	if (init_mutex(mutex.mutex_fork, arg.nb_philos))
+		return (terminate(th, data, mutex, arg.nb_philos));
+	if (init_mutex(mutex.mutex_extra, 5))
+		return (terminate(th, data, mutex, arg.nb_philos));
+	if (init_data(data, mutex, arg))
+		return (terminate(th, data, mutex, arg.nb_philos));
 	init_th(th, data);
 	ft_free(th, data, mutex, arg.nb_philos);
 	return (0);
