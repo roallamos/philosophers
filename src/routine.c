@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodralva <rodralva@student.42madrid>       +#+  +:+       +#+        */
+/*   By: rodralva <rodralva@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:46:30 by rodralva          #+#    #+#             */
-/*   Updated: 2024/06/05 15:00:25 by rodralva         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:52:41 by rodralva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	eat(t_data *data, int fork_1, int fork_2)
 {
-	if (data->arg.nb_philos <= 3)
-		pthread_mutex_lock(data->lock_mutex);
 	pthread_mutex_lock(&data->fork[fork_1]);
 	speak(data, FORK);
 	if (data->arg.nb_philos == 1)
@@ -27,8 +25,6 @@ int	eat(t_data *data, int fork_1, int fork_2)
 		return (1);
 	}
 	pthread_mutex_lock(&data->fork[fork_2]);
-	if (data->arg.nb_philos <= 3)
-		pthread_mutex_unlock(data->lock_mutex);
 	speak(data, FORK);
 	speak(data, EAT);
 	ft_usleep(data->arg.time_to_eat);
@@ -58,25 +54,34 @@ int	philo_eat(t_data *data, int left_fork, int right_fork)
 	return (0);
 }
 
+void	philo_think(t_data *data)
+{
+	long	time;
+	
+	time = (data->arg.time_to_eat * 2) - data->arg.time_to_sleep;
+	ft_usleep(time * 0.42);
+	speak(data, THINK);
+}
+
 void	*routine(void *arg)
 {
-	int		nb;
-	int		nb_derecha;
+	int		fork;
+	int		right_fork;
 	t_data	*data;
 
 	data = (t_data *)arg;
-	nb = data->philo;
-	nb_derecha = nb + 1;
-	if (nb_derecha > data->arg.nb_philos)
-		nb_derecha = 1;
+	fork = data->philo;
+	right_fork = fork + 1;
+	if (right_fork > data->arg.nb_philos)
+		right_fork = 1;
 	if (data->philo % 2 == 1 && data->arg.nb_philos != 1)
 		ft_usleep(50);
 	while (1)
 	{
-		if (philo_eat(data, nb, nb_derecha))
+		if (philo_eat(data, fork, right_fork))
 			return (NULL);
 		philo_sleep(data);
-		speak(data, THINK);
+		philo_think(data);
 		pthread_mutex_lock(data->dead_mutex);
 		if (*data->dead)
 		{
